@@ -20,7 +20,7 @@ it, simply add the following line to your Podfile:
 
 ## Author
 
-Nestor Lafon-Gracia, nlafongracia@groupon.com
+Nestor Lafon-Gracia, nestor.lafon@gmail.com
 
 ## License
 
