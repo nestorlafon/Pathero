@@ -60,12 +60,12 @@ NLPathMaker * createPath(NSString *basePath) {
     };
 }
 
-- (NLPathMaker *)appendPathComponent:(NSString *)pathComponent {
+- (instancetype)appendPathComponent:(NSString *)pathComponent {
     [self.pathComponents addObject:pathComponent];
     return self;
 }
 
-- (NLPathMaker *)addQueryParam:(NSString *)param value:(NSString *)value {
+- (instancetype)addQueryParam:(NSString *)param value:(NSString *)value {
     [self.queryParams setValue:value forKey:param];
     return self;
 }

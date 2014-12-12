@@ -9,16 +9,22 @@
 #import <Foundation/Foundation.h>
 
 @class NLPathMaker;
+@protocol NLPathero;
 
-typedef NLPathMaker * (^AppendPathComponentMethod)(NSString *);
-typedef NLPathMaker * (^AddQueryParamMethod)(NSString *, NSString *);
+typedef id<NLPathero> (^AppendPathComponentMethod)(NSString *);
+typedef id<NLPathero> (^AddQueryParamMethod)(NSString *, NSString *);
 
-NLPathMaker * createPath(NSString *basePath);
-
-@interface NLPathMaker : NSObject
+@protocol NLPathero <NSObject>
++ (instancetype)pathMakerWithBasePath:(NSString *)basePath;
 
 @property (readonly) NSString *path;
 @property (readonly) AppendPathComponentMethod appendPathComponent;
 @property (readonly) AddQueryParamMethod addQueryParam;
+@end
+
+NLPathMaker * createPath(NSString *basePath);
+
+@interface NLPathMaker : NSObject <NLPathero>
 
 @end
+
