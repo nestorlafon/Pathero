@@ -1,0 +1,17 @@
+PODS:
+  - Kiwi (2.3.1)
+  - Pathero (0.1.0)
+
+DEPENDENCIES:
+  - Kiwi
+  - Pathero (from `../`)
+
+EXTERNAL SOURCES:
+  Pathero:
+    :path: ../
+
+SPEC CHECKSUMS:
+  Kiwi: 73e1400209055ee9c8ba78c6012b6b642d0fb9f7
+  Pathero: 9c919e8ec01596fc9eae1e6be9b7b9489b6427c5
+
+COCOAPODS: 0.34.4

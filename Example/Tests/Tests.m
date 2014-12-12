@@ -6,37 +6,30 @@
 //  Copyright (c) 2014 Nestor Lafon-Gracia. All rights reserved.
 //
 
+#import "Kiwi.h"
+#import "NLPathMaker.h"
+
 SPEC_BEGIN(InitialTests)
 
-describe(@"My initial tests", ^{
-
-  context(@"will fail", ^{
-
-      it(@"can do maths", ^{
-          [[@1 should] equal:@2];
-      });
-
-      it(@"can read", ^{
-          [[@"number" should] equal:@"string"];
-      });
+describe(@"Basic test", ^{
     
-      it(@"will wait and fail", ^{
-          NSObject *object = [[NSObject alloc] init];
-          [[expectFutureValue(object) shouldEventually] receive:@selector(autoContentAccessingProxy)];
-      });
-  });
-
-  context(@"will pass", ^{
-    
-      it(@"can do maths", ^{
-        [[@1 should] beLessThan:@23];
-      });
-    
-      it(@"can read", ^{
-          [[@"team" shouldNot] containString:@"I"];
-      });  
-  });
-  
+    context(@"possitive test", ^{
+        
+        it(@"should create a path", ^{
+            NSString *merchant = @"A-merchant";
+            NSString *country = @"A-country";
+            
+            NSString *path =
+            createPath(@"v2/").
+            appendPathComponent(country).
+            appendPathComponent(@"merchants").
+            appendPathComponent(merchant).
+            appendPathComponent(@"messages").
+            addQueryParam(@"subversion", @"1").
+            addQueryParam(@"tags_supported", @"popup").path;
+            [[path should] equal:@"v2/A-country/merchants/A-merchant/messages?subversion=1&tags_supported=popup"];
+        });
+    });
 });
 
 SPEC_END
