@@ -12,7 +12,9 @@
 @protocol NLPathero;
 
 typedef id<NLPathero> (^AppendPathComponentMethod)(NSString *);
-typedef id<NLPathero> (^AddQueryParamMethod)(NSString *, NSString *);
+typedef id<NLPathero> (^AddQueryParamMethod)(NSString *, id);
+
+NLPathMaker * createPath(NSString *basePath);
 
 @protocol NLPathero <NSObject>
 + (instancetype)pathMakerWithBasePath:(NSString *)basePath;
@@ -21,8 +23,6 @@ typedef id<NLPathero> (^AddQueryParamMethod)(NSString *, NSString *);
 @property (readonly) AppendPathComponentMethod appendPathComponent;
 @property (readonly) AddQueryParamMethod addQueryParam;
 @end
-
-NLPathMaker * createPath(NSString *basePath);
 
 @interface NLPathMaker : NSObject <NLPathero>
 

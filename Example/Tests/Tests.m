@@ -16,20 +16,34 @@ describe(@"Basic test", ^{
     context(@"possitive test", ^{
         
         it(@"should create a path", ^{
-            NSString *merchant = @"A-merchant";
-            NSString *country = @"A-country";
+            NSString *path1 = @"A";
+            NSString *path2 = @"B";
             
             NSString *path =
-            createPath(@"v2/").
-            appendPathComponent(country).
-            appendPathComponent(@"merchants").
-            appendPathComponent(merchant).
-            appendPathComponent(@"messages").
-            addQueryParam(@"subversion", @"1").
-            addQueryParam(@"tags_supported", @"popup").path;
-            [[path should] equal:@"v2/A-country/merchants/A-merchant/messages?subversion=1&tags_supported=popup"];
+            createPath(@"origin/").
+            appendPathComponent(path1).
+            appendPathComponent(@"fixed").
+            appendPathComponent(path2).
+            appendPathComponent(@"endpoint").
+            addQueryParam(@"version", @"1").
+            addQueryParam(@"tags", @"one").path;
+            [[path should] equal:@"origin/A/fixed/B/endpoint?tags=one&version=1"];
         });
     });
+    
+    context(@"query array test", ^{
+        
+        it(@"should create a path", ^{
+            NSString *path =
+            createPath(@"origin/").
+            appendPathComponent(@"endpoint").
+            addQueryParam(@"version", @"1").
+            addQueryParam(@"tags", @[@1,@"2",@"three"]).
+            addQueryParam(@"client", @"XXXxxxXXX").path;
+            [[path should] equal:@"origin/endpoint?client=XXXxxxXXX&tags=1&tags=2&tags=three&version=1"];
+        });
+    });
+    
 });
 
 SPEC_END

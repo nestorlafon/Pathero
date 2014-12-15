@@ -65,9 +65,42 @@ NLPathMaker * createPath(NSString *basePath) {
     return self;
 }
 
-- (instancetype)addQueryParam:(NSString *)param value:(NSString *)value {
+- (instancetype)addQueryParam:(NSString *)param value:(id)value {
     [self.queryParams setValue:value forKey:param];
     return self;
+}
+
+- (NSString *)paramStringValue:(id)value {
+    if ([value isKindOfClass:[NSString class]]) {
+        return value;
+    }
+    else if ([value respondsToSelector:@selector(stringValue)]) {
+        return [value stringValue];
+    }
+    else {
+        return nil;
+    }
+}
+
+- (NSString *)stringParamForKey:(NSString *)key value:(id)value {
+    NSString *paramStringValue = [self paramStringValue:value];
+    if (paramStringValue) {
+        return [NSString stringWithFormat:@"%@=%@", key, paramStringValue];
+    }
+    else if ([value isKindOfClass:[NSArray class]]) {
+        NSMutableString *arrayStringParam = [NSMutableString new];
+        [value enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            [arrayStringParam appendString:[self stringParamForKey:key value:obj]];
+            if (idx < [value count] -1) {
+                [arrayStringParam appendString:@"&"];
+            }
+        }];
+        return arrayStringParam;
+    }
+    else {
+        NSAssert(YES, @"Error creating the path");
+        return nil;
+    }
 }
 
 - (NSString *)path {
@@ -83,7 +116,7 @@ NLPathMaker * createPath(NSString *basePath) {
         NSArray *allKeys = [[self.queryParams allKeys] sortedArrayUsingSelector:@selector(compare:)];
         NSString *lastKey = [allKeys lastObject];
         for (NSString *key in allKeys) {
-            [path appendFormat:@"%@=%@", key, self.queryParams[key]];
+            [path appendString:[self stringParamForKey:key value:self.queryParams[key]]];
             if (key != lastKey) {
                 [path appendString:@"&"];
             }
