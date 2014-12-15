@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "Pathero"
-  s.version          = "0.1.0"
+  s.version          = "0.1.1"
   s.summary          = "A helper for creating URL path strings"
   s.description      = <<-DESC
 			Pather is a helper to create URL path string.
