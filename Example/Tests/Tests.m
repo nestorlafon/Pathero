@@ -44,6 +44,20 @@ describe(@"Basic test", ^{
         });
     });
     
+    context(@"query conditional test", ^{
+        
+        it(@"should create a path", ^{
+            
+            NSString *path =
+            createPath(@"origin/").
+            appendPathComponent(@"endpoint").
+            addQueryParamConditional(@"version", @"1", NO).
+            addQueryParamConditional(@"tags", @"one", YES).
+            addQueryParam(@"client", @"XXXxxxXXX").path;
+            [[path should] equal:@"origin/endpoint?client=XXXxxxXXX&tags=one"];
+        });
+    });
+    
 });
 
 SPEC_END

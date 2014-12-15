@@ -55,8 +55,19 @@ NLPathMaker * createPath(NSString *basePath) {
 }
 
 - (AddQueryParamMethod)addQueryParam {
-    return ^(NSString *key, NSString *value) {
+    return ^(NSString *key, id value) {
         return [self addQueryParam:key value:value];
+    };
+}
+
+- (AddQueryParamMethodConditional)addQueryParamConditional {
+    return ^(NSString *key, id value, BOOL condition) {
+        if (condition) {
+            return [self addQueryParam:key value:value];
+        }
+        else {
+            return self;
+        }
     };
 }
 
