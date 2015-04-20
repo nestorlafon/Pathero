@@ -58,6 +58,25 @@ describe(@"Basic test", ^{
         });
     });
     
+    context(@"adding nil component", ^{
+        
+        it(@"should create a path without the component and backslashes", ^{
+            
+            NSString *path =
+            createPath(@"origin/").
+            appendPathComponent(@"endpoint").
+            appendPathComponent(nil).
+            addQueryParamConditional(@"version", @"1", NO).
+            addQueryParamConditional(@"tags", @"one", YES).
+            addQueryParam(@"client", @"XXXxxxXXX").
+            addQueryParam(@"nil", nil).
+            addQueryParam(nil, @"param").path;
+            [[path should] equal:@"origin/endpoint?client=XXXxxxXXX&tags=one"];
+        });
+    });
+    
+    
+    
 });
 
 SPEC_END

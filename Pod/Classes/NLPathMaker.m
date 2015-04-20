@@ -72,12 +72,16 @@ NLPathMaker * createPath(NSString *basePath) {
 }
 
 - (instancetype)appendPathComponent:(NSString *)pathComponent {
-    [self.pathComponents addObject:pathComponent];
+    if (pathComponent != nil) {
+        [self.pathComponents addObject:pathComponent];
+    }
     return self;
 }
 
 - (instancetype)addQueryParam:(NSString *)param value:(id)value {
-    [self.queryParams setValue:value forKey:param];
+    if (value != nil && param != nil) {
+        [self.queryParams setValue:value forKey:param];
+    }
     return self;
 }
 
